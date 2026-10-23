@@ -26,7 +26,16 @@ COPY backend backend
 WORKDIR /app/backend
 RUN bun run build
 
-# Stage 5: Production image
+# Stage 5: Apply migration and seed
+FROM base AS migrate
+COPY --from=install-dev /temp/dev/node_modules node_modules
+COPY --from=install-dev /temp/dev/backend/node_modules backend/node_modules
+COPY backend backend
+WORKDIR /app/backend
+USER bun
+CMD ["sh", "-c", "bun run db:migrate && bun run db:seed"]
+
+# Stage 6: Production image
 FROM base AS production
 # Copy production dependencies
 COPY --from=install-prod /temp/prod/package.json package.json

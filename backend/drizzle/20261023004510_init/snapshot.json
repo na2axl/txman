@@ -1,0 +1,740 @@
+{
+  "type": "base",
+  "version": "9",
+  "dialect": "postgres",
+  "id": "a1c61334-39f3-4c26-b437-874ae40682e9",
+  "prevIds": [
+    "00000000-0000-0000-0000-000000000000"
+  ],
+  "footprints": [
+    {
+      "statementType": "create_enum",
+      "statementTarget": [
+        "enum",
+        "finances",
+        "transaction_status"
+      ],
+      "writes": [
+        "s|enum|finances.transaction_status",
+        "n|enum|finances.transaction_status",
+        "e|enum|finances.transaction_status",
+        "n|type|finances.transaction_status"
+      ],
+      "reads": [
+        "n|sch|finances"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "finances",
+        "customers"
+      ],
+      "writes": [
+        "s|tbl|finances.customers",
+        "n|tbl|finances.customers",
+        "e|tbl|finances.customers",
+        "n|rel|finances.customers",
+        "n|type|finances.customers",
+        "n|rel|finances.customers_pkey"
+      ],
+      "reads": [
+        "n|sch|finances"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "finances",
+        "transactions"
+      ],
+      "writes": [
+        "s|tbl|finances.transactions",
+        "n|tbl|finances.transactions",
+        "e|tbl|finances.transactions",
+        "n|rel|finances.transactions",
+        "n|type|finances.transactions",
+        "n|rel|finances.transactions_pkey",
+        "n|rel|finances.transactions_reference_key"
+      ],
+      "reads": [
+        "n|sch|finances",
+        "n|enum|finances.transaction_status"
+      ]
+    },
+    {
+      "statementType": "create_table",
+      "statementTarget": [
+        "table",
+        "iam",
+        "users"
+      ],
+      "writes": [
+        "s|tbl|iam.users",
+        "n|tbl|iam.users",
+        "e|tbl|iam.users",
+        "n|rel|iam.users",
+        "n|type|iam.users",
+        "n|rel|iam.users_pkey",
+        "n|rel|iam.users_username_key"
+      ],
+      "reads": [
+        "n|sch|iam"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "finances",
+        "customers",
+        "customers_name_trgm_idx"
+      ],
+      "writes": [
+        "s|idx|finances.customers_name_trgm_idx",
+        "n|idx|finances.customers_name_trgm_idx",
+        "e|idx|finances.customers_name_trgm_idx",
+        "n|rel|finances.customers_name_trgm_idx"
+      ],
+      "reads": [
+        "n|tbl|finances.customers",
+        "n|sch|finances"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "finances",
+        "transactions",
+        "transactions_customer_created_idx"
+      ],
+      "writes": [
+        "s|idx|finances.transactions_customer_created_idx",
+        "n|idx|finances.transactions_customer_created_idx",
+        "e|idx|finances.transactions_customer_created_idx",
+        "n|rel|finances.transactions_customer_created_idx"
+      ],
+      "reads": [
+        "n|tbl|finances.transactions",
+        "n|sch|finances",
+        "n|col|finances.transactions.customer_id",
+        "n|col|finances.transactions.created_at"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "finances",
+        "transactions",
+        "transactions_creator_created_idx"
+      ],
+      "writes": [
+        "s|idx|finances.transactions_creator_created_idx",
+        "n|idx|finances.transactions_creator_created_idx",
+        "e|idx|finances.transactions_creator_created_idx",
+        "n|rel|finances.transactions_creator_created_idx"
+      ],
+      "reads": [
+        "n|tbl|finances.transactions",
+        "n|sch|finances",
+        "n|col|finances.transactions.creator_id",
+        "n|col|finances.transactions.created_at"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "finances",
+        "transactions",
+        "transactions_status_created_idx"
+      ],
+      "writes": [
+        "s|idx|finances.transactions_status_created_idx",
+        "n|idx|finances.transactions_status_created_idx",
+        "e|idx|finances.transactions_status_created_idx",
+        "n|rel|finances.transactions_status_created_idx"
+      ],
+      "reads": [
+        "n|tbl|finances.transactions",
+        "n|sch|finances",
+        "n|col|finances.transactions.status",
+        "n|col|finances.transactions.created_at"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "finances",
+        "transactions",
+        "transactions_created_idx"
+      ],
+      "writes": [
+        "s|idx|finances.transactions_created_idx",
+        "n|idx|finances.transactions_created_idx",
+        "e|idx|finances.transactions_created_idx",
+        "n|rel|finances.transactions_created_idx"
+      ],
+      "reads": [
+        "n|tbl|finances.transactions",
+        "n|sch|finances",
+        "n|col|finances.transactions.created_at"
+      ]
+    },
+    {
+      "statementType": "create_index",
+      "statementTarget": [
+        "index",
+        "finances",
+        "transactions",
+        "transactions_reference_trgm_idx"
+      ],
+      "writes": [
+        "s|idx|finances.transactions_reference_trgm_idx",
+        "n|idx|finances.transactions_reference_trgm_idx",
+        "e|idx|finances.transactions_reference_trgm_idx",
+        "n|rel|finances.transactions_reference_trgm_idx"
+      ],
+      "reads": [
+        "n|tbl|finances.transactions",
+        "n|sch|finances"
+      ]
+    },
+    {
+      "statementType": "create_fk",
+      "statementTarget": [
+        "table",
+        "finances",
+        "transactions"
+      ],
+      "writes": [
+        "s|fk|finances.transactions.transactions_customer_id_customers_id_fkey",
+        "n|fk|finances.transactions.transactions_customer_id_customers_id_fkey",
+        "e|fk|finances.transactions.transactions_customer_id_customers_id_fkey",
+        "n|con|finances.transactions.transactions_customer_id_customers_id_fkey"
+      ],
+      "reads": [
+        "n|tbl|finances.transactions",
+        "n|sch|finances",
+        "n|tbl|finances.customers",
+        "n|sch|finances",
+        "n|col|finances.transactions.customer_id",
+        "n|col|finances.customers.id",
+        "e|uniqueness|finances.customers.id"
+      ]
+    }
+  ],
+  "ddl": [
+    {
+      "schema": "finances",
+      "name": "customers",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "finances",
+      "name": "transactions",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "iam",
+      "name": "users",
+      "isRlsEnabled": false,
+      "entityType": "tables"
+    },
+    {
+      "schema": "finances",
+      "name": "transaction_status",
+      "values": [
+        "PENDING",
+        "APPROVED",
+        "REJECTED"
+      ],
+      "entityType": "enums"
+    },
+    {
+      "schema": "finances",
+      "table": "customers",
+      "name": "id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "finances",
+      "table": "customers",
+      "name": "name",
+      "type": "varchar(255)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "finances",
+      "table": "customers",
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "finances",
+      "table": "customers",
+      "name": "updated_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "customer_id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "creator_id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "reference",
+      "type": "varchar(22)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "amount",
+      "type": "bigint",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "currency",
+      "type": "varchar(3)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "status",
+      "type": "transaction_status",
+      "typeSchema": "finances",
+      "notNull": true,
+      "dimensions": 0,
+      "default": "'PENDING'",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "updated_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "iam",
+      "table": "users",
+      "name": "id",
+      "type": "uuid",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "iam",
+      "table": "users",
+      "name": "username",
+      "type": "varchar(64)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "iam",
+      "table": "users",
+      "name": "password_hash",
+      "type": "text",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "iam",
+      "table": "users",
+      "name": "created_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "iam",
+      "table": "users",
+      "name": "updated_at",
+      "type": "timestamp with time zone",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": "now()",
+      "generated": null,
+      "identity": null,
+      "entityType": "columns"
+    },
+    {
+      "schema": "finances",
+      "table": "customers",
+      "name": "customers_name_trgm_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "\"name\" gin_trgm_ops",
+          "isExpression": true,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "gin",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "transactions_customer_created_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "customer_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        },
+        {
+          "value": "created_at",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "transactions_creator_created_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "creator_id",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        },
+        {
+          "value": "created_at",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "transactions_status_created_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "status",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        },
+        {
+          "value": "created_at",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "transactions_created_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "created_at",
+          "isExpression": false,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "btree",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "transactions_reference_trgm_idx",
+      "nameExplicit": true,
+      "columns": [
+        {
+          "value": "\"reference\" gin_trgm_ops",
+          "isExpression": true,
+          "asc": true,
+          "nullsFirst": false,
+          "opclass": null
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "with": "",
+      "method": "gin",
+      "concurrently": false,
+      "entityType": "indexes"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "transactions_customer_id_customers_id_fkey",
+      "nameExplicit": false,
+      "columns": [
+        "customer_id"
+      ],
+      "schemaTo": "finances",
+      "tableTo": "customers",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "RESTRICT",
+      "entityType": "fks"
+    },
+    {
+      "schema": "finances",
+      "table": "customers",
+      "name": "customers_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "transactions_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "iam",
+      "table": "users",
+      "name": "users_pkey",
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "entityType": "pks"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "transactions_reference_key",
+      "nameExplicit": false,
+      "columns": [
+        "reference"
+      ],
+      "nullsNotDistinct": false,
+      "entityType": "uniques"
+    },
+    {
+      "schema": "iam",
+      "table": "users",
+      "name": "users_username_key",
+      "nameExplicit": false,
+      "columns": [
+        "username"
+      ],
+      "nullsNotDistinct": false,
+      "entityType": "uniques"
+    },
+    {
+      "schema": "finances",
+      "table": "customers",
+      "name": "customers_name_not_blank",
+      "value": "length(btrim(\"name\")) > 0",
+      "entityType": "checks"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "transactions_amount_positive",
+      "value": "\"amount\" > 0",
+      "entityType": "checks"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "transactions_currency_format",
+      "value": "\"currency\" ~ '^[A-Z]{3}$'",
+      "entityType": "checks"
+    },
+    {
+      "schema": "finances",
+      "table": "transactions",
+      "name": "transactions_reference_format",
+      "value": "\"reference\" ~ '^TX[0-9]{14}[A-Z0-9]{6}$'",
+      "entityType": "checks"
+    }
+  ]
+}

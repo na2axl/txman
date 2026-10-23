@@ -36,6 +36,21 @@ services:
     networks:
       - private
 
+  migrate:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      target: migrate
+    container_name: ejara-migrate
+    restart: "no"
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-ejara}:${POSTGRES_PASSWORD:-ejara}@postgres:5432/${POSTGRES_DB:-ejara}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - private
+
   backend:
     build:
       context: .
@@ -52,12 +67,15 @@ services:
       DATABASE_NAME: ${POSTGRES_DB:-ejara}
       DATABASE_USER: ${POSTGRES_USER:-ejara}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-ejara}
-      DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@postgres:5432/${DATABASE_NAME}
+      JWT_SECRET: ${JWT_SECRET:-dev-only-secret-change-me-0123456789abcdef}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-3600}
       REDIS_HOST: redis
       REDIS_PORT: 6379
     ports:
       - "3000:3000"
     depends_on:
+      migrate:
+        condition: service_completed_successfully
       postgres:
         condition: service_healthy
       redis:

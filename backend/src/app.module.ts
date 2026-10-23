@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { DrizzleModule } from '@nestjs/drizzle';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import {
@@ -17,6 +18,10 @@ import {
       expandVariables: true,
       load: [appConfig, dbConfig, jwtConfig],
       validationSchema: EnvironmentSchema,
+    }),
+    DrizzleModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: AppService,
     }),
   ],
   controllers: [AppController],
