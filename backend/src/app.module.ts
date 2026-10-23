@@ -9,6 +9,7 @@ import {
   EnvironmentSchema,
   jwtConfig,
 } from './config/index.js';
+import { IamModule } from './iam/iam.module.js';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import {
       imports: [ConfigModule],
       useClass: AppService,
     }),
+    IamModule,
   ],
   controllers: [AppController],
   providers: [AppService],
