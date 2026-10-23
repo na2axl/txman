@@ -1,10 +1,10 @@
+import { randomUUIDv7 } from 'node:crypto';
 import { pgSchema, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
-import { v7 as uuidV7 } from 'uuid';
 
 const iam = pgSchema('iam');
 
 export const users = iam.table('users', {
-  id: uuid('id').primaryKey().$default(uuidV7),
+  id: uuid('id').primaryKey().$default(randomUUIDv7),
   username: varchar('username', { length: 64 }).notNull().unique(),
   password_hash: text('password_hash').notNull(),
 

@@ -32,12 +32,13 @@
     "@nestjs/drizzle": "^0.0.2",
     "@nestjs/jwt": "12.0.3",
     "@nestjs/platform-express": "^12.0.1",
+    "dinero.js": "2.0.2",
     "drizzle-orm": "^1.0.0-rc.5",
+    "http-status": "^2.1.0",
     "pg": "^8.23.1",
     "radash": "^12.1.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "uuid": "^14.0.3",
     "zod": "^4.6.7"
   },
   "devDependencies": {

@@ -1,3 +1,4 @@
+import { randomUUIDv7 } from 'node:crypto';
 import { defineRelations, sql } from 'drizzle-orm';
 import {
   bigint,
@@ -8,7 +9,6 @@ import {
   uuid,
   varchar,
 } from 'drizzle-orm/pg-core';
-import { v7 as uuidV7 } from 'uuid';
 
 const finances = pgSchema('finances');
 
@@ -29,7 +29,7 @@ export const transactionStatus = finances.enum(
 export const customers = finances.table(
   'customers',
   {
-    id: uuid('id').primaryKey().$default(uuidV7),
+    id: uuid('id').primaryKey().$default(randomUUIDv7),
     name: varchar('name', { length: 255 }).notNull(),
 
     created_at: timestamp('created_at', { withTimezone: true })
@@ -49,7 +49,7 @@ export const customers = finances.table(
 export const transactions = finances.table(
   'transactions',
   {
-    id: uuid('id').primaryKey().$default(uuidV7),
+    id: uuid('id').primaryKey().$default(randomUUIDv7),
     customer_id: uuid('customer_id')
       .notNull()
       .references(() => customers.id, {

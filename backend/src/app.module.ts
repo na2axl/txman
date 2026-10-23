@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { DrizzleModule } from '@nestjs/drizzle';
-import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
+import { HealthController } from './common/health/health.controller.js';
 import {
   appConfig,
   dbConfig,
@@ -26,7 +26,7 @@ import { IamModule } from './iam/iam.module.js';
     }),
     IamModule,
   ],
-  controllers: [AppController],
+  controllers: [HealthController],
   providers: [AppService],
 })
 export class AppModule {}
