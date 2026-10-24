@@ -1,0 +1,39 @@
+info:
+  name: Liveness probe
+  type: http
+  seq: 1
+  tags:
+    - Health
+
+http:
+  method: GET
+  url: "{{baseUrl}}/api/v1/health"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+examples:
+  - name: 200 Response
+    description: The service is up
+    request:
+      url: "{{baseUrl}}/api/v1/health"
+      method: GET
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "status": "ok"
+          }
+
+docs: Checks if the server is live and running.

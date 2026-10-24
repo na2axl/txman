@@ -1,0 +1,156 @@
+info:
+  name: Get a transaction
+  type: http
+  seq: 3
+  tags:
+    - Transactions
+
+http:
+  method: GET
+  url: "{{baseUrl}}/api/v1/transactions/:id"
+  params:
+    - name: id
+      value: ""
+      type: path
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+examples:
+  - name: 200 Response
+    description: The transaction
+    request:
+      url: "{{baseUrl}}/api/v1/transactions/:id"
+      method: GET
+      params:
+        - name: id
+          value: ""
+          type: path
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "id": "",
+            "reference": "",
+            "customer": {
+              "id": "",
+              "name": ""
+            },
+            "amount": 0,
+            "currency": "",
+            "status": "PENDING",
+            "allowed_transitions": [
+              "PENDING"
+            ],
+            "created_at": "",
+            "updated_at": ""
+          }
+  - name: 401 Response
+    description: Missing, invalid or expired bearer token
+    request:
+      url: "{{baseUrl}}/api/v1/transactions/:id"
+      method: GET
+      params:
+        - name: id
+          value: ""
+          type: path
+    response:
+      status: 401
+      statusText: Unauthorized
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+  - name: 404 Response
+    description: Resource not found
+    request:
+      url: "{{baseUrl}}/api/v1/transactions/:id"
+      method: GET
+      params:
+        - name: id
+          value: ""
+          type: path
+    response:
+      status: 404
+      statusText: Not Found
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+  - name: 422 Response
+    description: Request validation failed
+    request:
+      url: "{{baseUrl}}/api/v1/transactions/:id"
+      method: GET
+      params:
+        - name: id
+          value: ""
+          type: path
+    response:
+      status: 422
+      statusText: Unprocessable Entity
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }

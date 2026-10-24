@@ -1,0 +1,28 @@
+opencollection: 1.0.0
+
+info:
+  name: txman
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ""
+      port: ""
+      auth:
+        username: ""
+        password: ""
+      bypassProxy: ""
+bundled: false
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git
+    openapi:
+      - sourceUrl: http://localhost:3000/api/docs.json
+        groupBy: tags
+        lastSyncDate: 2026-10-24T03:57:08.780Z
+        specHash: cb349de53e24c37b385ab1b58007713b
+        autoCheck: true
+        autoCheckInterval: 5

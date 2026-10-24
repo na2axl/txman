@@ -1,0 +1,134 @@
+info:
+  name: Search customers
+  type: http
+  seq: 1
+  tags:
+    - Customers
+
+http:
+  method: GET
+  url: "{{baseUrl}}/api/v1/customers"
+  params:
+    - name: search
+      value: ""
+      type: query
+      disabled: true
+    - name: limit
+      value: "20"
+      type: query
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+examples:
+  - name: 200 Response
+    description: Matching customers, ordered by name
+    request:
+      url: "{{baseUrl}}/api/v1/customers"
+      method: GET
+      params:
+        - name: search
+          value: ""
+          type: query
+          disabled: true
+        - name: limit
+          value: "20"
+          type: query
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "data": [
+              {
+                "id": "",
+                "name": ""
+              }
+            ]
+          }
+  - name: 401 Response
+    description: Missing, invalid or expired bearer token
+    request:
+      url: "{{baseUrl}}/api/v1/customers"
+      method: GET
+      params:
+        - name: search
+          value: ""
+          type: query
+          disabled: true
+        - name: limit
+          value: "20"
+          type: query
+    response:
+      status: 401
+      statusText: Unauthorized
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+  - name: 422 Response
+    description: Request validation failed
+    request:
+      url: "{{baseUrl}}/api/v1/customers"
+      method: GET
+      params:
+        - name: search
+          value: ""
+          type: query
+          disabled: true
+        - name: limit
+          value: "20"
+          type: query
+    response:
+      status: 422
+      statusText: Unprocessable Entity
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+
+docs: Lookup by name, used by the transaction form and filter.

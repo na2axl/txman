@@ -1,0 +1,226 @@
+info:
+  name: Change the status of a transaction
+  type: http
+  seq: 4
+  tags:
+    - Transactions
+
+http:
+  method: PATCH
+  url: "{{baseUrl}}/api/v1/transactions/:id/status"
+  params:
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "status": "PENDING"
+      }
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+examples:
+  - name: 200 Response
+    description: The transaction with its new status
+    request:
+      url: "{{baseUrl}}/api/v1/transactions/:id/status"
+      method: PATCH
+      params:
+        - name: id
+          value: ""
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+            "status": "PENDING"
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "id": "",
+            "reference": "",
+            "customer": {
+              "id": "",
+              "name": ""
+            },
+            "amount": 0,
+            "currency": "",
+            "status": "PENDING",
+            "allowed_transitions": [
+              "PENDING"
+            ],
+            "created_at": "",
+            "updated_at": ""
+          }
+  - name: 401 Response
+    description: Missing, invalid or expired bearer token
+    request:
+      url: "{{baseUrl}}/api/v1/transactions/:id/status"
+      method: PATCH
+      params:
+        - name: id
+          value: ""
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+            "status": "PENDING"
+          }
+    response:
+      status: 401
+      statusText: Unauthorized
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+  - name: 404 Response
+    description: Resource not found
+    request:
+      url: "{{baseUrl}}/api/v1/transactions/:id/status"
+      method: PATCH
+      params:
+        - name: id
+          value: ""
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+            "status": "PENDING"
+          }
+    response:
+      status: 404
+      statusText: Not Found
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+  - name: 409 Response
+    description: Conflict with the current state of the resource
+    request:
+      url: "{{baseUrl}}/api/v1/transactions/:id/status"
+      method: PATCH
+      params:
+        - name: id
+          value: ""
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+            "status": "PENDING"
+          }
+    response:
+      status: 409
+      statusText: Conflict
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+  - name: 422 Response
+    description: Request validation failed
+    request:
+      url: "{{baseUrl}}/api/v1/transactions/:id/status"
+      method: PATCH
+      params:
+        - name: id
+          value: ""
+          type: path
+      body:
+        type: json
+        data: |-
+          {
+            "status": "PENDING"
+          }
+    response:
+      status: 422
+      statusText: Unprocessable Entity
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+
+docs: Only PENDING → APPROVED and PENDING → REJECTED are allowed; any other transition returns 409.

@@ -1,0 +1,125 @@
+info:
+  name: Sign in
+  type: http
+  seq: 1
+  tags:
+    - Auth
+
+http:
+  method: POST
+  url: "{{baseUrl}}/api/v1/auth/login"
+  body:
+    type: json
+    data: |-
+      {
+        "username": "",
+        "password": ""
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+examples:
+  - name: 200 Response
+    description: Access token
+    request:
+      url: "{{baseUrl}}/api/v1/auth/login"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "username": "",
+            "password": ""
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "access_token": "",
+            "token_type": "Bearer",
+            "expires_in": 0
+          }
+  - name: 401 Response
+    description: Missing, invalid or expired bearer token
+    request:
+      url: "{{baseUrl}}/api/v1/auth/login"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "username": "",
+            "password": ""
+          }
+    response:
+      status: 401
+      statusText: Unauthorized
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+  - name: 422 Response
+    description: Request validation failed
+    request:
+      url: "{{baseUrl}}/api/v1/auth/login"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "username": "",
+            "password": ""
+          }
+    response:
+      status: 422
+      statusText: Unprocessable Entity
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+
+docs: Exchanges a username and password for a JWT access token.

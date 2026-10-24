@@ -1,0 +1,331 @@
+info:
+  name: List transactions
+  type: http
+  seq: 1
+  tags:
+    - Transactions
+
+http:
+  method: GET
+  url: "{{baseUrl}}/api/v1/transactions"
+  params:
+    - name: page
+      value: "1"
+      type: query
+    - name: page_size
+      value: "20"
+      type: query
+    - name: search
+      value: ""
+      type: query
+      disabled: true
+    - name: status
+      value: PENDING
+      type: query
+      disabled: true
+    - name: status
+      value: APPROVED
+      type: query
+      disabled: true
+    - name: status
+      value: REJECTED
+      type: query
+      disabled: true
+    - name: customer_id
+      value: ""
+      type: query
+      disabled: true
+    - name: sort_by
+      value: created_at
+      type: query
+    - name: sort_by
+      value: updated_at
+      type: query
+      disabled: true
+    - name: sort_by
+      value: amount
+      type: query
+      disabled: true
+    - name: sort_by
+      value: reference
+      type: query
+      disabled: true
+    - name: sort_by
+      value: status
+      type: query
+      disabled: true
+    - name: order
+      value: asc
+      type: query
+      disabled: true
+    - name: order
+      value: desc
+      type: query
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+examples:
+  - name: 200 Response
+    description: A page of transactions
+    request:
+      url: "{{baseUrl}}/api/v1/transactions"
+      method: GET
+      params:
+        - name: page
+          value: "1"
+          type: query
+        - name: page_size
+          value: "20"
+          type: query
+        - name: search
+          value: ""
+          type: query
+          disabled: true
+        - name: status
+          value: PENDING
+          type: query
+          disabled: true
+        - name: status
+          value: APPROVED
+          type: query
+          disabled: true
+        - name: status
+          value: REJECTED
+          type: query
+          disabled: true
+        - name: customer_id
+          value: ""
+          type: query
+          disabled: true
+        - name: sort_by
+          value: created_at
+          type: query
+        - name: sort_by
+          value: updated_at
+          type: query
+          disabled: true
+        - name: sort_by
+          value: amount
+          type: query
+          disabled: true
+        - name: sort_by
+          value: reference
+          type: query
+          disabled: true
+        - name: sort_by
+          value: status
+          type: query
+          disabled: true
+        - name: order
+          value: asc
+          type: query
+          disabled: true
+        - name: order
+          value: desc
+          type: query
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "data": [
+              {
+                "id": "",
+                "reference": "",
+                "customer": {
+                  "id": "",
+                  "name": ""
+                },
+                "amount": 0,
+                "currency": "",
+                "status": "PENDING",
+                "allowed_transitions": [
+                  "PENDING"
+                ],
+                "created_at": "",
+                "updated_at": ""
+              }
+            ],
+            "meta": {
+              "total": 0,
+              "page": 0,
+              "page_size": 0
+            }
+          }
+  - name: 401 Response
+    description: Missing, invalid or expired bearer token
+    request:
+      url: "{{baseUrl}}/api/v1/transactions"
+      method: GET
+      params:
+        - name: page
+          value: "1"
+          type: query
+        - name: page_size
+          value: "20"
+          type: query
+        - name: search
+          value: ""
+          type: query
+          disabled: true
+        - name: status
+          value: PENDING
+          type: query
+          disabled: true
+        - name: status
+          value: APPROVED
+          type: query
+          disabled: true
+        - name: status
+          value: REJECTED
+          type: query
+          disabled: true
+        - name: customer_id
+          value: ""
+          type: query
+          disabled: true
+        - name: sort_by
+          value: created_at
+          type: query
+        - name: sort_by
+          value: updated_at
+          type: query
+          disabled: true
+        - name: sort_by
+          value: amount
+          type: query
+          disabled: true
+        - name: sort_by
+          value: reference
+          type: query
+          disabled: true
+        - name: sort_by
+          value: status
+          type: query
+          disabled: true
+        - name: order
+          value: asc
+          type: query
+          disabled: true
+        - name: order
+          value: desc
+          type: query
+    response:
+      status: 401
+      statusText: Unauthorized
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+  - name: 422 Response
+    description: Request validation failed
+    request:
+      url: "{{baseUrl}}/api/v1/transactions"
+      method: GET
+      params:
+        - name: page
+          value: "1"
+          type: query
+        - name: page_size
+          value: "20"
+          type: query
+        - name: search
+          value: ""
+          type: query
+          disabled: true
+        - name: status
+          value: PENDING
+          type: query
+          disabled: true
+        - name: status
+          value: APPROVED
+          type: query
+          disabled: true
+        - name: status
+          value: REJECTED
+          type: query
+          disabled: true
+        - name: customer_id
+          value: ""
+          type: query
+          disabled: true
+        - name: sort_by
+          value: created_at
+          type: query
+        - name: sort_by
+          value: updated_at
+          type: query
+          disabled: true
+        - name: sort_by
+          value: amount
+          type: query
+          disabled: true
+        - name: sort_by
+          value: reference
+          type: query
+          disabled: true
+        - name: sort_by
+          value: status
+          type: query
+          disabled: true
+        - name: order
+          value: asc
+          type: query
+          disabled: true
+        - name: order
+          value: desc
+          type: query
+    response:
+      status: 422
+      statusText: Unprocessable Entity
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+
+docs: Paginated list with search (reference or customer name), status and customer filters, and sorting.

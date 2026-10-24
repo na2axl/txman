@@ -1,0 +1,188 @@
+info:
+  name: Create a transaction
+  type: http
+  seq: 2
+  tags:
+    - Transactions
+
+http:
+  method: POST
+  url: "{{baseUrl}}/api/v1/transactions"
+  body:
+    type: json
+    data: |-
+      {
+        "reference": "",
+        "customer_id": "",
+        "customer_name": "",
+        "amount": 0,
+        "currency": ""
+      }
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
+
+examples:
+  - name: 201 Response
+    description: The created transaction, with status PENDING
+    request:
+      url: "{{baseUrl}}/api/v1/transactions"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "reference": "",
+            "customer_id": "",
+            "customer_name": "",
+            "amount": 0,
+            "currency": ""
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "id": "",
+            "reference": "",
+            "customer": {
+              "id": "",
+              "name": ""
+            },
+            "amount": 0,
+            "currency": "",
+            "status": "PENDING",
+            "allowed_transitions": [
+              "PENDING"
+            ],
+            "created_at": "",
+            "updated_at": ""
+          }
+  - name: 401 Response
+    description: Missing, invalid or expired bearer token
+    request:
+      url: "{{baseUrl}}/api/v1/transactions"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "reference": "",
+            "customer_id": "",
+            "customer_name": "",
+            "amount": 0,
+            "currency": ""
+          }
+    response:
+      status: 401
+      statusText: Unauthorized
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+  - name: 409 Response
+    description: Conflict with the current state of the resource
+    request:
+      url: "{{baseUrl}}/api/v1/transactions"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "reference": "",
+            "customer_id": "",
+            "customer_name": "",
+            "amount": 0,
+            "currency": ""
+          }
+    response:
+      status: 409
+      statusText: Conflict
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+  - name: 422 Response
+    description: Request validation failed
+    request:
+      url: "{{baseUrl}}/api/v1/transactions"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "reference": "",
+            "customer_id": "",
+            "customer_name": "",
+            "amount": 0,
+            "currency": ""
+          }
+    response:
+      status: 422
+      statusText: Unprocessable Entity
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          {
+            "type": "",
+            "title": "",
+            "status": 0,
+            "detail": "",
+            "instance": "",
+            "request_id": "",
+            "errors": [
+              {
+                "field": "",
+                "message": ""
+              }
+            ]
+          }
+
+docs: Always starts as PENDING. Provide either `customer_id` (existing customer) or `customer_name` (the customer is created in the same database transaction). `amount` is an integer in minor units.
