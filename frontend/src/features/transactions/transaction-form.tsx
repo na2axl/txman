@@ -40,7 +40,7 @@ const formSchema = z
         'Use TX + 14 digits (YYYYMMDDHHmmSS) + 6 uppercase letters or digits',
       ),
     customerMode: z.enum(['existing', 'new']),
-    customerId: z.uuidv7(),
+    customerId: z.string(),
     customerName: z.string().trim().max(255, 'Name is too long'),
     amount: z.string(),
     currency: z.enum(CURRENCY_CODES, { error: 'Choose a currency' }),
@@ -251,6 +251,8 @@ export function TransactionForm() {
                   <Label htmlFor={field.name}>Amount</Label>
                   <Input
                     id={field.name}
+                    type="number"
+                    min={0}
                     name={field.name}
                     inputMode="decimal"
                     placeholder="0.00"
