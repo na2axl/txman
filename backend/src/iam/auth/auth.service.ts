@@ -5,19 +5,7 @@ import type { Config } from '../../config/index.js';
 import { hashPassword, verifyPassword } from '../password/password.js';
 import { type User, UsersService } from '../users/users.service.js';
 import type { AccessTokenPayload } from './auth.types.js';
-
-/**
- * The result of a successful login.
- * @author Axel Nana <ax.lnana@outlook.com>
- */
-export interface LoginResult {
-  /** The access token used to authenticate requests. */
-  access_token: string;
-  /** The expected token type. */
-  token_type: 'Bearer';
-  /** Token lifetime in seconds. */
-  expires_in: number;
-}
+import type { LoginResult } from './auth-response.schema.js';
 
 /**
  * The service for managing authentication.

@@ -16,17 +16,15 @@ import {
 import type { Database } from '../db/types.js';
 import type { CreateTransactionInput } from './schemas/create-transaction.schema.js';
 import type { ListTransactionsQuery } from './schemas/list-transactions-query.schema.js';
+import type {
+  TransactionPage,
+  TransactionResponse,
+} from './schemas/transaction-response.schema.js';
 import { assertTransition } from './transaction-status.js';
 import {
-  type TransactionResponse,
   type TransactionRow,
   toTransactionResponse,
 } from './transactions.mapper.js';
-
-export interface TransactionPage {
-  data: TransactionResponse[];
-  meta: { total: number; page: number; page_size: number };
-}
 
 const UNIQUE_VIOLATION = '23505';
 const FOREIGN_KEY_VIOLATION = '23503';

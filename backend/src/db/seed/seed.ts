@@ -1,3 +1,4 @@
+import { randomUUIDv7 } from 'node:crypto';
 import { count, sql } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { seed } from 'drizzle-seed';
@@ -9,6 +10,7 @@ const ADMIN_USER_ID = '511D82BD-ED33-75C8-B9A4-CB6086E938ED';
 const ADMIN_USERNAME = 'admin';
 const ADMIN_PASSWORD = 'admin1234';
 
+const BULK_CUSTOMERS = 25;
 const BULK_TRANSACTIONS = 200;
 const HISTORY_DAYS = 90;
 const CURRENCIES = ['XAF', 'USD', 'EUR', 'NGN', 'GHS'];
@@ -22,6 +24,10 @@ function randomReferences(total: number): string[] {
     references.add(generateReference(date));
   }
   return [...references];
+}
+
+function uuidV7s(total: number): string[] {
+  return Array.from({ length: total }, randomUUIDv7);
 }
 
 const url = process.env.DATABASE_URL;
@@ -45,10 +51,23 @@ await db
   .onConflictDoNothing();
 
 await seed(db, { customers, transactions }).refine((f) => ({
-  customers: { count: 25, columns: { name: f.fullName() } },
+  customers: {
+    count: BULK_CUSTOMERS,
+    columns: {
+      id: f.valuesFromArray({
+        values: uuidV7s(BULK_CUSTOMERS),
+        isUnique: true,
+      }),
+      name: f.fullName(),
+    },
+  },
   transactions: {
     count: BULK_TRANSACTIONS,
     columns: {
+      id: f.valuesFromArray({
+        values: uuidV7s(BULK_TRANSACTIONS),
+        isUnique: true,
+      }),
       creator_id: f.valuesFromArray({ values: [ADMIN_USER_ID] }),
       reference: f.valuesFromArray({
         values: randomReferences(BULK_TRANSACTIONS),

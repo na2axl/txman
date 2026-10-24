@@ -1,4 +1,5 @@
 import type { TransactionStatus } from '../db/index.js';
+import type { TransactionResponse } from './schemas/transaction-response.schema.js';
 import { allowedTransitions } from './transaction-status.js';
 
 /**
@@ -15,22 +16,6 @@ export interface TransactionRow {
   status: TransactionStatus;
   created_at: Date;
   updated_at: Date;
-}
-
-/**
- * Public representation of a transaction.
- * @author Axel Nana <ax.lnana@outlook.com>
- */
-export interface TransactionResponse {
-  id: string;
-  reference: string;
-  customer: { id: string; name: string };
-  amount: number;
-  currency: string;
-  status: TransactionStatus;
-  allowed_transitions: readonly TransactionStatus[];
-  created_at: string;
-  updated_at: string;
 }
 
 /**

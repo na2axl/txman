@@ -4,12 +4,8 @@ import { asc, ilike } from 'drizzle-orm';
 import { escapeLike } from '../common/utils.js';
 import { customers } from '../db/index.js';
 import type { Database } from '../db/types.js';
+import type { CustomerResponse } from './customer-response.schema.js';
 import type { ListCustomersQuery } from './customers.schemas.js';
-
-export interface CustomerResponse {
-  id: string;
-  name: string;
-}
 
 /**
  * Service for managing customers.
