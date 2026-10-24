@@ -15,6 +15,7 @@ COPY --from=install /app/node_modules node_modules
 COPY --from=install /app/frontend/node_modules frontend/node_modules
 COPY frontend frontend
 WORKDIR /app/frontend
+RUN bunx @tanstack/router-cli generate
 RUN bun run build
 
 # Stage 4: Production image, static files behind nginx (also proxies /api)
