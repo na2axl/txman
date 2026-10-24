@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectDrizzle } from '@nestjs/drizzle';
 import { asc, ilike } from 'drizzle-orm';
+import { escapeLike } from '../common/utils.js';
 import { customers } from '../db/index.js';
 import type { Database } from '../db/types.js';
 import type { ListCustomersQuery } from './customers.schemas.js';
@@ -26,11 +27,12 @@ export class CustomersService {
     search,
     limit,
   }: ListCustomersQuery): Promise<CustomerResponse[]> {
-    const pattern = search?.replace(/[\\%_]/g, '\\$&');
     return this.db
       .select({ id: customers.id, name: customers.name })
       .from(customers)
-      .where(pattern ? ilike(customers.name, `%${pattern}%`) : undefined)
+      .where(
+        search ? ilike(customers.name, `%${escapeLike(search)}%`) : undefined,
+      )
       .orderBy(asc(customers.name))
       .limit(limit);
   }

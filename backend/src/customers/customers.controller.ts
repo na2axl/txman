@@ -1,7 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import {
-  ListCustomersQuery,
-} from './customers.schemas.js';
+import { ListCustomersQuery } from './customers.schemas.js';
 import {
   type CustomerResponse,
   CustomersService,

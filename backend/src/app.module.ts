@@ -11,6 +11,7 @@ import {
 } from './config/index.js';
 import { CustomersModule } from './customers/customers.module.js';
 import { IamModule } from './iam/iam.module.js';
+import { TransactionsModule } from './transactions/transactions.module.js';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { IamModule } from './iam/iam.module.js';
     }),
     IamModule,
     CustomersModule,
+    TransactionsModule,
   ],
   controllers: [HealthController],
   providers: [AppService],
