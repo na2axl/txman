@@ -3,3 +3,8 @@
 .zed
 
 node_modules
+.playwright-mcp
+
+.env
+.DS_Store
+dist
