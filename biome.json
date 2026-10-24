@@ -9,10 +9,12 @@
       "!**/dist",
       "!**/build",
       "!**/coverage",
-      "!**/.react-router",
+      "!**/routeTree.gen.ts",
+      "!backend/drizzle",
+      "!**/.playwright-mcp",
       "!**/*.tsbuildinfo",
       "!**/*.svg",
-      "!.omc",
+      "!**/.omc",
       "!.idea",
       "!.claude"
     ]
