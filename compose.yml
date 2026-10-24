@@ -20,22 +20,6 @@ services:
     networks:
       - private
 
-  redis:
-    image: redis:8-alpine
-    container_name: ejara-redis
-    restart: unless-stopped
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - private
-
   migrate:
     build:
       context: .
@@ -69,16 +53,12 @@ services:
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-ejara}
       JWT_SECRET: ${JWT_SECRET:-dev-only-secret-change-me-0123456789abcdef}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-3600}
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
     ports:
       - "3000:3000"
     depends_on:
       migrate:
         condition: service_completed_successfully
       postgres:
-        condition: service_healthy
-      redis:
         condition: service_healthy
     networks:
       - private
@@ -92,7 +72,7 @@ services:
     container_name: ejara-frontend
     restart: unless-stopped
     ports:
-      - "5173:3000"
+      - "5173:8080"
     depends_on:
       - backend
     networks:
@@ -100,7 +80,6 @@ services:
 
 volumes:
   postgres_data:
-  redis_data:
 
 networks:
   private:
